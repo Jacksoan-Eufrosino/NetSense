@@ -9,76 +9,83 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>NetSense</title>
   </head>
   <body>
     <!--Inicio Navbar-->
-    <nav class="navbar bg-primary">
+    <nav class="navbar navbar-expand-lg" id="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            src="/images/netsense.png"
-            alt="Logo"
-            width="30"
-            height="24"
-            class="d-inline-block align-text-center"
-          />
-          NetSense
-        </a>
+        <a class="navbar-brand" href="#">NetSense</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Contact</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">About</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
     <!--Fim Navbar-->
+    <div class="container text-center m-5 p-5">
+      <h1>NetSense</h1>
+    </div>
 
     <!--Inicio tabela analitca-->
-    <div class="container bg-secondary">
-      <table class="table table-striped my-5">
+    <div class="container">
+      <table class="table" id="tabela">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Protocolo</th>
+            <th scope="col">Qtd Pacotes</th>
+            <th scope="col">Média</th>
+            <th scope="col">Outro</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th scope="row">Http</th>
+            <td>30</td>
+            <td>127</td>
+            <td>...</td>
           </tr>
           <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
+            <th scope="row">Http(s)</th>
+            <td>743</td>
+            <td>1243</td>
+            <td>...</td>
           </tr>
           <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
+            <th scope="row">Ftp</th>
+            <td>4</td>
+            <td>1</td>
+            <td>...</td>
           </tr>
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
+            <th scope="row">Telnet</th>
+            <td>0</td>
+            <td>0</td>
+            <td>...</td>
           </tr>
         </tbody>
       </table>
     </div>
     <!--Fim tabela analitica-->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="text-center m-5">Powered by Cisco Assossiate Company</div>
+        </div>
+      </div>
+    </footer>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
