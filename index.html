@@ -1,90 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <title>NetSense</title>
-    <meta name="description" content="Página principal.">
   </head>
-  <body>
-    <!--Inicio Navbar-->
-    <nav class="navbar navbar-expand-lg" id="navbar">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">NetSense</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="contact.html">Contact</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="about.html">About</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!--Fim Navbar-->
-    <div class="container text-center m-5 p-5">
-      <h1>NetSense</h1>
-    </div>
+  <style>
+    .feature-icon {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 0.75rem;
+    }
 
-    <!--Inicio tabela analitca-->
+    .icon-square {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.75rem;
+    }
+
+    .text-shadow-1 {
+      text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25);
+    }
+    .text-shadow-2 {
+      text-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+    }
+    .text-shadow-3 {
+      text-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+    }
+
+    .card-cover {
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+    }
+
+    .feature-icon-small {
+      width: 3rem;
+      height: 3rem;
+    }
+  </style>
+  <body>
+    <!-- inicio navbar -->
     <div class="container">
-      <table class="table" id="tabela">
-        <thead>
-          <tr>
-            <th scope="col">Protocolo</th>
-            <th scope="col">Qtd Pacotes</th>
-            <th scope="col">Média</th>
-            <th scope="col">Outro</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Http</th>
-            <td>30</td>
-            <td>127</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <th scope="row">Http(s)</th>
-            <td>743</td>
-            <td>1243</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <th scope="row">Ftp</th>
-            <td>4</td>
-            <td>1</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <th scope="row">Telnet</th>
-            <td>0</td>
-            <td>0</td>
-            <td>...</td>
-          </tr>
-        </tbody>
-      </table>
+      <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+      >
+        <div class="col-md-3 mb-2 mb-md-0">
+          <a
+            href="/"
+            class="d-inline-flex link-body-emphasis text-decoration-none"
+          >
+            <img src="./radar.svg" alt="radar" style="height: 40px" />
+          </a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+          <li><a href="#features" class="nav-link px-2">Features</a></li>
+          <li><a href="#" class="nav-link px-2">About</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+          <button type="button" class="btn btn-outline-primary me-2">
+            Login
+          </button>
+          <button type="button" class="btn btn-primary">Sign-up</button>
+        </div>
+      </header>
     </div>
-    <!--Fim tabela analitica-->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="text-center m-5">Powered by Cisco Assossiate Company</div>
+    <!-- fim navbar -->
+
+    <!-- inicio hero -->
+    <div class="container">
+      <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+          <img
+            src="images.jpg"
+            class="d-block mx-lg-auto img-fluid"
+            alt="Bootstrap Themes"
+            width="700"
+            height="500"
+            loading="lazy"
+          />
+        </div>
+        <div class="col-lg-6">
+          <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+            NetSense
+          </h1>
+          <p class="lead">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat
+            earum magni modi laboriosam distinctio eos, voluptatum, sunt
+            reiciendis alias temporibus soluta iusto officia quis pariatur ad
+            ullam reprehenderit, eveniet officiis?
+          </p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">
+              Teste Agora
+            </button>
+          </div>
         </div>
       </div>
-    </footer>
+    </div>
+    <!-- fim hero -->
+
+    <!-- inicio features -->
+    <div class="container" id="features">
+      <h2 class="pb-2 border-bottom">Porque usar o NetSense?</h2>
+      <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+        <div class="col d-flex align-items-start">
+          <div
+            class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"
+          >
+            <img src="tools.svg" alt="tools" />
+          </div>
+          <div>
+            <h3 class="fs-2 text-body-emphasis">Performance</h3>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum
+              ab aliquam repudiandae deleniti quo numquam, eligendi architecto
+              error repellendus, atque sequi aperiam quaerat, alias praesentium
+              excepturi maxime expedita. Suscipit, necessitatibus?
+            </p>
+            <a href="#" class="btn btn-primary">Comece a usar</a>
+          </div>
+        </div>
+        <div class="col d-flex align-items-start">
+          <div
+            class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3"
+          >
+            <img src="cpu-fill.svg" alt="cpu" />
+          </div>
+          <div>
+            <h3 class="fs-2 text-body-emphasis">Mais segurança</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero,
+              eius saepe aspernatur voluptatem iure facere libero vel eaque
+              repellendus ut neque iusto voluptate doloremque minima molestiae
+              sint quibusdam. Amet, veniam?
+            </p>
+            <a href="#" class="btn btn-primary">Comece a usar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- fim features -->
+
+    <!-- inicio footer -->
+    <div class="container">
+      <footer
+        class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+      >
+        <p class="col-md-4 mb-0 text-body-secondary">© 2024 NetSense, Inc</p>
+
+        <a
+          href="/"
+          class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+        >
+          <img src="radar.svg" alt="radar" style="height: 40px" />
+        </a>
+
+        <ul class="nav col-md-4 justify-content-end">
+          <li class="nav-item">
+            <a href="#" class="nav-link px-2 text-body-secondary">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#features" class="nav-link px-2 text-body-secondary"
+              >Features</a
+            >
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-2 text-body-secondary">About</a>
+          </li>
+        </ul>
+      </footer>
+    </div>
+    <!-- fim footer -->
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

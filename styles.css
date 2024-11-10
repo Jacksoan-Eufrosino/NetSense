@@ -1,14 +1,18 @@
+:root {
+  --cor-bg: #f2f2f2; /* Azul */
+  --cor-fg: #181818; /* Verde */
+  --cor-terceira: #5cb8e4;
+  --cor-quarta: #8758ff;
+}
+
 body {
-  background-color: #2c3333;
+  background-color: var(--cor-bg);
 }
 
 h1 {
-  color: #000;
+  color: var(--cor-fg);
 }
 
-footer {
-  color: #000;
-}
 .navbar {
   background-color: #2e4f4f;
 }
@@ -18,10 +22,17 @@ footer {
   transition: color 0.3s ease;
 }
 
+.table {
+  --bs-table-bg: var(--cor-terceira);
+}
+
 .nav-link:hover {
   color: #0e8388 !important;
 }
 
+#mainContent {
+  height: 100vh;
+}
 .table .table-hover {
   background-color: #000;
 }
