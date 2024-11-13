@@ -5,3 +5,7 @@ NetSense é um projeto colaborativo para monitorar redes locais, focado na anál
 ## Apresentação
 
 ![Landpage da aplicação](images/landPage.png)
+
+## Licença
+
+[MIT](https://github.com/Jacksoan-Eufrosino/NetSense/blob/main/LICENSE)
