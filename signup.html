@@ -24,12 +24,10 @@
                   alt="brand"
                   class="mb-3"
               /></a>
-              <h1 class="mb-1">Bem vindo</h1>
+              <h1 class="mb-1">Resgistre-se com um email</h1>
               <p class="mb-0">
-                Ainda não possui uma conta?
-                <a href="./signup.html" class="text-primary"
-                  >Resgistre-se aqui</a
-                >
+                Já possui uma conta?
+                <a href="./login.html" class="text-primary">Faça login aqui</a>
               </p>
             </div>
           </div>
@@ -45,6 +43,21 @@
             <div class="card mb-4">
               <div class="card-body">
                 <form class="needs-validation mb-6" novalidate="">
+                  <div class="mb-3">
+                    <label for="signinNameInput" class="form-label">
+                      Nome Completo
+                      <span class="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="signinNameInput"
+                      required=""
+                    />
+                    <div class="invalid-feedback">
+                      Por favor forneça um nome válido.
+                    </div>
+                  </div>
                   <div class="mb-3">
                     <label for="signinEmailInput" class="form-label">
                       Email
@@ -79,28 +92,11 @@
 
                   <div
                     class="mb-4 d-flex align-items-center justify-content-between"
-                  >
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="rememberMeCheckbox"
-                      />
-                      <label class="form-check-label" for="rememberMeCheckbox"
-                        >Lembrar de mim</label
-                      >
-                    </div>
-
-                    <div>
-                      <a href="../forget-password.html" class="text-primary"
-                        >Esqueci minha senha</a
-                      >
-                    </div>
-                  </div>
+                  ></div>
 
                   <div class="d-grid">
                     <button class="btn btn-primary" type="submit">
-                      Entrar
+                      Registrar
                     </button>
                   </div>
                 </form>
