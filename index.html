@@ -51,33 +51,57 @@
   </style>
   <body>
     <!-- inicio navbar -->
-    <div class="container">
-      <header
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
-      >
-        <div class="col-md-3 mb-2 mb-md-0">
-          <a
-            href="/"
-            class="d-inline-flex link-body-emphasis text-decoration-none"
-          >
-            <img src="images/radar.svg" alt="radar" style="height: 40px" />
-          </a>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="images/radar.svg"
+            alt="Logo"
+            width="35"
+            height="30"
+            class="d-inline-block align-text-top"
+          />
+          NetSense</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+          </ul>
+          <div class="text-start">
+            <button type="button" class="btn btn-outline-primary me-2">
+              <a class="text-decoration-none" href="login.html">Login</a>
+            </button>
+            <button type="button" class="btn btn-primary me-2">
+              <a class="text-decoration-none text-white" href="signup.html"
+                >Sign-up</a
+              >
+            </button>
+          </div>
         </div>
-
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-          <li><a href="#features" class="nav-link px-2">Features</a></li>
-          <li><a href="#" class="nav-link px-2">About</a></li>
-        </ul>
-
-        <div class="col-md-3 text-end">
-          <button type="button" class="btn btn-outline-primary me-2">
-            <a class="text-decoration-none" href="login.html">Login</a>
-          </button>
-          <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
-      </header>
-    </div>
+      </div>
+    </nav>
     <!-- fim navbar -->
 
     <!-- inicio hero -->
