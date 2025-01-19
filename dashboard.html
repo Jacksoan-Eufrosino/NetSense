@@ -12,6 +12,8 @@
       crossorigin="anonymous"
     />
 
+    <script src="js/sessionDashboard.js"></script>
+
     <style>
       #regexList {
         max-height: 500px;
@@ -57,6 +59,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -64,19 +67,21 @@
             </li>
           </ul>
 
-          <div>
-            <button type="button" class="btn btn-primary me-2">
-              <a class="text-decoration-none text-white" href="signup.html"
-                >Sign-up</a
+          <div class="text-start">
+            
+            <button type="button" class="btn btn-primary me-2" id="buttonLeft">
+              <a class="text-decoration-none text-white" href="index.html"
+                >Sair</a
               >
             </button>
           </div>
+
         </div>
       </div>
     </nav>
 
     <div class="container">
-      <h3>Dashboard para usuários não autenticados - limite de 10 palavras Regex</h3>
+      <h3>Dashboard principal</h3>
       <br>
       <br>
       <div class="row mb-4">
@@ -135,7 +140,15 @@
         </footer>
       </div>
     </div>
-    
+
+    <script>
+      document.getElementById("buttonLeft").addEventListener("click", function () {
+        document.cookie = "authToken=; path=/; max-age=0;"; //
+        alert("Você saiu da sua conta.");
+        window.location.href = "login.html";
+      });
+    </script>
+
     <script>
       document.getElementById("addRegex").addEventListener("click", function () {
         const regexInput = document.getElementById("regexInput").value.trim();
@@ -161,49 +174,6 @@
           e.target.parentElement.remove();
         }
       });
-    
-      const packets = [
-        "GET /admin HTTP/1.1",
-        "POST /login HTTP/1.1",
-        "GET /dashboard HTTP/1.1",
-        "ERROR 403 Forbidden",
-        "USER-Agent: Mozilla/5.0",
-      ];
-    
-      setInterval(() => {
-        const packetView = document.getElementById("packetView");
-        const regexList = Array.from(document.querySelectorAll("#regexList li"))
-          .map((item) => item.firstChild.textContent.trim()) 
-          .filter((text) => text); 
-    
-        
-        const newPacket = packets[Math.floor(Math.random() * packets.length)];
-        let highlightedPacket = newPacket;
-    
-        
-        regexList.forEach((regex) => {
-          try {
-            
-            const re = new RegExp(regex, "gi");
-            highlightedPacket = highlightedPacket.replace(
-              re,
-              (match) => `<span class="highlighted">${match}</span>`
-            );
-          } catch (e) {
-            console.warn(`Regex inválido ignorado: ${regex}`);
-          }
-        });
-    
-        
-        const div = document.createElement("div");
-        div.innerHTML = highlightedPacket;
-        packetView.appendChild(div);
-    
-        
-        if (packetView.childElementCount > 10) {
-          packetView.removeChild(packetView.firstChild);
-        }
-      }, 2000);
     </script>
     
 
