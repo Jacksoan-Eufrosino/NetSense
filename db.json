@@ -11,6 +11,18 @@
       "name": "Ryann",
       "email": "ryann@gmail.com",
       "password": "123456"
+    },
+    {
+      "id": "41a2",
+      "name": "Jacksoan Eufrosino",
+      "email": "jacksoan@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "98b0",
+      "name": "teste1",
+      "email": "teste@teste1.com",
+      "password": "123456"
     }
   ]
 }
