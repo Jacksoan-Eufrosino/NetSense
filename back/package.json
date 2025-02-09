@@ -1,0 +1,30 @@
+{
+  "name": "invest-app",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node --experimental-vm-modules ./node_modules/.bin/jest src",
+    "test:coverage": "node --experimental-vm-modules ./node_modules/.bin/jest src --coverage"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "testTimeout": 20000,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
+}
