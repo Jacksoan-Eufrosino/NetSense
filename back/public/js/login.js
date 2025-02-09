@@ -15,7 +15,8 @@ document.querySelector('form').addEventListener('submit', async (e) => {
 
     if (response.ok) {
       alert('Login bem-sucedido!');
-      window.location.href = './dashboard.html';
+      document.cookie = `authToken=${btoa(`${email}:${password}`)}; path=/`;
+      window.location.href = '/public/dashboard.html';
     } else {
       const errorData = await response.json();
       alert(`Erro ao fazer login: ${errorData.message}`);
