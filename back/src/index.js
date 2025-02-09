@@ -8,7 +8,7 @@ import router from './routes.js';
 
 
 const server = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Obter o diretório atual
 const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +19,7 @@ server.use(morgan('tiny'));
 server.use(
   cors({
     origin: '*',
-    methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+    methods: 'GET,OPTIONS,PUT,POST,DELETE',
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     preflightContinue: false,

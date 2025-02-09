@@ -40,6 +40,16 @@ router.get('/about.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'about.html'));
 });
 
+// Rota para servir o arquivo dashboard.html
+router.get('/public/dashboard.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public', 'dashboard.html'));
+});
+
+// Rota para servir o arquivo index.html na pasta public
+router.get('/public/index.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
+
 // Obter todos os usuários
 router.get('/api/users', (req, res) => {
   res.json(hosts);
@@ -66,8 +76,9 @@ router.post('/api/users', (req, res) => {
   // Atualizar o arquivo hosts.js
   const hostsContent = `export const hosts = ${JSON.stringify(hosts, null, 2)};`;
 
-  fs.writeFile('./src/data/hosts.js', hostsContent, (err) => {
+  fs.writeFile(path.join(__dirname, './data/hosts.js'), hostsContent, (err) => {
     if (err) {
+      console.error('Erro ao salvar usuário:', err);
       throw new HttpError('Unable to save user data', 500);
     }
 
