@@ -36,7 +36,7 @@ router.get('/login.html', (req, res) => {
 });
 
 // Rota para servir o arquivo about.html
-router.get('/about.html', (req, res) => {
+router.get('/public/about.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'about.html'));
 });
 
