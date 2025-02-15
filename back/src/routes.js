@@ -4,12 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { hosts } from './data/hosts.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dbPromise from './database.js';
 
 const __filename = fileURLToPath(import.meta.url); // Caminho do arquivo atual
 const __dirname = path.dirname(__filename); // Diretório do arquivo atual
 
 const router = express.Router();
 
+//Trata dos erros HTTP
 class HttpError extends Error {
   constructor(message, code = 400) {
     super(message);
@@ -51,46 +53,61 @@ router.get('/public/index.html', (req, res) => {
 });
 
 // Obter todos os usuários
-router.get('/api/users', (req, res) => {
-  res.json(hosts);
+router.get('/api/users', async (req, res) => {
+  const db = await dbPromise;
+  const users = await db.all('SELECT * FROM users');
+  res.json(users);
 });
 
 // Registrar um novo usuário
-router.post('/api/users', (req, res) => {
+router.post('/api/users', async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
     throw new HttpError('Please fill in all fields', 400);
   }
 
-  const userExists = hosts.some((host) => host.email === email);
+ // const userExists = hosts.some((host) => host.email === email);
+
+  const db = await dbPromise;
+  const userExists = await db.get('SELECT * FROM users WHERE email = ?', email);
 
   if (userExists) {
     throw new HttpError('Email already registered. Please use another email.', 400);
   }
 
   const id = uuidv4();
-  const newUser = { id, name, email, password };
-  hosts.push(newUser);
+ // const newUser = { id, name, email, password };
+ 
+ await db.run('INSERT INTO users (id, name, email, password) VALUES (?, ?, ?, ?)', id , name, email, password);
+  
+// hosts.push(newUser);
 
-  // Atualizar o arquivo hosts.js
-  const hostsContent = `export const hosts = ${JSON.stringify(hosts, null, 2)};`;
-
-  fs.writeFile(path.join(__dirname, './data/hosts.js'), hostsContent, (err) => {
-    if (err) {
-      console.error('Erro ao salvar usuário:', err);
-      throw new HttpError('Unable to save user data', 500);
-    }
-
-    res.status(201).json(newUser);
-  });
+res.status(201).json({id, name, email, password});
 });
 
+
+//   // Atualizar o arquivo hosts.js
+//   const hostsContent = `export const hosts = ${JSON.stringify(hosts, null, 2)};`;
+
+//   fs.writeFile(path.join(__dirname, './data/hosts.js'), hostsContent, (err) => {
+//     if (err) {
+//       console.error('Erro ao salvar usuário:', err);
+//       throw new HttpError('Unable to save user data', 500);
+//     }
+
+//     res.status(201).json(newUser);
+//   });
+// });
+
 // Autenticar um usuário
-router.post('/api/login', (req, res) => {
+router.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const user = hosts.find((host) => host.email === email && host.password === password);
+  const db = await dbPromise;
+  const user = await db.get('SELECT * FROM users WHERE email = ? AND password = ?', email, password);
+
+// const user = hosts.find((host) => host.email === email && host.password === password);
 
   if (!user) {
     throw new HttpError('Invalid email or password', 401);
