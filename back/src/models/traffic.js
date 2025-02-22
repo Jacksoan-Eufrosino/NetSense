@@ -1,16 +1,16 @@
-import Database from '../src/database/database.js';
+import Database from '../database/database.js';
 
-async function create({ name, email, password }) {
+async function create({ source_ip, destination_ip, protocol, user_id }) {
   const db = await Database.connect();
 
   const sql = `
       INSERT INTO
-        users (name, email, password)
+        traffic (source_ip, destination_ip, protocol, user_id)
       VALUES
-        (?, ?, ?)
+        (?, ?, ?, ?)
     `;
 
-  const { lastID } = await db.run(sql, [name, email, password]);
+  const { lastID } = await db.run(sql, [source_ip, destination_ip, protocol, user_id]);
 
   db.close();
 
@@ -28,30 +28,30 @@ async function read(where) {
       SELECT
           *
         FROM
-          users
+          traffic
         WHERE
           ${field} LIKE CONCAT( '%',?,'%')
       `;
 
-    const users = await db.all(sql, [value]);
+    const traffic = await db.all(sql, [value]);
 
     db.close();
 
-    return users;
+    return traffic;
   }
 
   const sql = `
     SELECT
       *
     FROM
-      users
+      traffic
   `;
 
-  const users = await db.all(sql);
+  const traffic = await db.all(sql);
 
   db.close();
 
-  return users;
+  return traffic;
 }
 
 async function readById(id) {
@@ -61,38 +61,38 @@ async function readById(id) {
       SELECT
           *
         FROM
-          users
+          traffic
         WHERE
           id = ?
       `;
 
-  const user = await db.get(sql, [id]);
+  const traffic = await db.get(sql, [id]);
 
   db.close();
 
-  return user;
+  return traffic;
 }
 
-async function update({ id, name, email, password }) {
+async function update({ id, source_ip, destination_ip, protocol, user_id }) {
   const db = await Database.connect();
 
   const sql = `
       UPDATE
-        users
+        traffic
       SET
-        name = ?, email = ?, password = ?
+        source_ip = ?, destination_ip = ?, protocol = ?, user_id = ?
       WHERE
         id = ?
     `;
 
-  const { changes } = await db.run(sql, [name, email, password, id]);
+  const { changes } = await db.run(sql, [source_ip, destination_ip, protocol, user_id, id]);
 
   db.close();
 
   if (changes === 1) {
     return readById(id);
   } else {
-    throw new Error('User not found');
+    throw new Error('Traffic not found');
   }
 }
 
@@ -101,7 +101,7 @@ async function remove(id) {
 
   const sql = `
     DELETE FROM
-      users
+      traffic
     WHERE
       id = ?
   `;
@@ -113,7 +113,7 @@ async function remove(id) {
   if (changes === 1) {
     return true;
   } else {
-    throw new Error('User not found');
+    throw new Error('Traffic not found');
   }
 }
 
