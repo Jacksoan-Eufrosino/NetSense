@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "sqlite-async": "^1.2.0"
+  },
+  "type": "module"
+}

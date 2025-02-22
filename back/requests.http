@@ -1,0 +1,34 @@
+### GET all traffic
+GET http://localhost:3000/api/traffic
+Content-Type: application/json
+
+###
+
+### POST /api/traffic
+POST http://localhost:3000/api/traffic
+Content-Type: application/json
+
+{
+  "source_ip": "192.168.1.5",
+  "destination_ip": "192.168.1.6",
+  "protocol": "HTTP",
+  "user_id": 1
+}
+
+###
+
+### GET all users
+GET http://localhost:3000/api/users
+Content-Type: application/json
+
+###
+
+### POST /api/users
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "name": "Rodrigo",
+  "email": "rodrigo@gmail.com",
+  "password": "123456"
+}
