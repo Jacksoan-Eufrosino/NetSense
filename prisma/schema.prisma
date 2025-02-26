@@ -9,6 +9,7 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+<<<<<<< HEAD
 
 model Host {
   id  String @id @default(uuid())
@@ -23,3 +24,5 @@ model User {
   name String?
   password String @unique
 }
+=======
+>>>>>>> 338744e0ee4afcf008a4d2fbe31625caacab0835

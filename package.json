@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "keywords": [],
-  "author": "Your Name",
+  "author": "Unknown",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
