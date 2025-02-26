@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const Router = express.Router();
+const routes = express.Router();
 
 // Define a pasta de arquivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
@@ -42,4 +42,4 @@ app.get("/dashboard", (req, res) => {
 });
 
 
-export default Router;
+export default routes;
