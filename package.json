@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "NetSense Application",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "start": "node back/src/index.js",
+    "dev": "nodemon back/src/index.js",
     "test": "jest"
   },
   "keywords": [],
@@ -13,8 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "express": "^4.17.1",
+    "express": "^4.21.2",
     "jsonwebtoken": "^8.5.1",
+    "prisma": "^6.4.1",
     "sqlite-async": "^1.1.0"
   },
   "devDependencies": {
