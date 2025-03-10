@@ -1,6 +1,6 @@
 import express from 'express';
-import Traffic from './src/models/traffic.js';
-import User from './src/models/user.js';
+import Traffic from './models/traffic.js';
+import User from './models/user.js';
 
 class HttpError extends Error {
   constructor(message, code = 400) {

@@ -1,10 +1,7 @@
-import { resolve } from 'path';
-import { Database } from 'sqlite-async';
+import { PrismaClient } from '@prisma/client';
 
-const dbFile = resolve('src', 'database', 'db.sqlite');
+const prisma = new PrismaClient({
+  log: ['query', 'info', 'warn', 'error'],
+});
 
-async function connect() {
-  return await Database.open(dbFile);
-}
-
-export default { connect };
+export default prisma;

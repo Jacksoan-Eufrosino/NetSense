@@ -1,0 +1,26 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  traffic  Traffic[]
+}
+
+model Traffic {
+  id             Int      @id @default(autoincrement())
+  source_ip      String
+  destination_ip String
+  protocol       String
+  timestamp      DateTime @default(now())
+  user_id        Int
+  user           User     @relation(fields: [user_id], references: [id])
+}
