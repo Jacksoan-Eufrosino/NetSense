@@ -5,7 +5,7 @@ document.querySelector("form").addEventListener("submit", async function (event)
     const password = document.getElementById("formSignUpPassword").value;
   
     try {
-      const response = await fetch("http://localhost:3000/users"); 
+      const response = await fetch("http://localhost:3000/api/"); 
       const users = await response.json();
   
       const user = users.find((user) => user.email === email && user.password === password);
@@ -13,9 +13,9 @@ document.querySelector("form").addEventListener("submit", async function (event)
       if (user) {
         
         document.cookie = `authToken=${btoa(`${email}:${password}`)}; path=/; max-age=3600;`;
-  
+        window.location.href = "./dashboard.html"; 
         alert("Login bem-sucedido!");
-        window.location.href = "dashboard.html"; 
+        
       } else {
         alert("Credenciais inválidas.");
       }

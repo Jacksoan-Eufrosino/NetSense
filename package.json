@@ -16,6 +16,7 @@
     "bcrypt": "^5.0.1",
     "express": "^4.21.2",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "prisma": "^6.4.1",
     "sqlite-async": "^1.1.0"
   },

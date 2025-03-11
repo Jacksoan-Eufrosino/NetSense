@@ -7,7 +7,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
   
     try {
       
-        const getUsersResponse = await fetch('http://localhost:3000/users');
+        const getUsersResponse = await fetch('http://localhost:3000/api/');
         const users = await getUsersResponse.json();
   
         const userExists = users.some((user) => user.email === email);
@@ -17,7 +17,7 @@ document.querySelector('form').addEventListener('submit', async (e) => {
             return;
         }
   
-        const response = await fetch('http://localhost:3000/users', {
+        const response = await fetch('http://localhost:3000/api/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

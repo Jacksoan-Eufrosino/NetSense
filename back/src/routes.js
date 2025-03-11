@@ -5,41 +5,48 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
 const routes = express.Router();
 
-// Define a pasta de arquivos estáticos
-app.use(express.static(path.join(__dirname, "public")));
-
 // Rota para servir a página inicial
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+routes.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../front/public", "index.html"));
 });
 
 // Rota para servir a página de login
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+routes.get("/login.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../front/public", "login.html"));
 });
 
 // Rota para servir a página de registro
-app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "signup.html"));
+routes.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../front/public", "signup.html"));
 });
 
 // Rota para servir a página "about"
-app.get("/about.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "about.html"));
+routes.get("/about.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../front/public", "about.html"));
 });
 
 // Rota para servir a página de erro
-app.get("/error", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "error.html"));
+routes.get("/error", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../front/public", "error.html"));
 });
 
 // Rota para servir o dashboard
-app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+routes.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../front/public", "dashboard.html"));
 });
 
+// Rota para registrar um novo usuário
+routes.post("/api/register", async (req, res) => {
+  const {name , email, password} = req.body;
+
+  try {
+    const newUser = await Users.create({name, email, password});
+    res.status(201).json({message: "Usuário registrado com sucesso!", user: newUser});
+  } catch(error) {
+    res.status(500).json({message: 'Erro ao registrar usuário', error: error.message});
+  }
+});
 
 export default routes;
