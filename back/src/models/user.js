@@ -1,8 +1,15 @@
+import bcrypt from 'bcrypt';
 import prisma from '../database/database.js';
 
+const saltRounds = Number(process.env.BCRYPT_SALT);
+
 async function create({ name, email, password }) {
+  const hash = await bcrypt.hash(password, saltRounds);
+
+  const data = { name, email, password: hash };
+
   const createdUser = await prisma.user.create({
-    data: { name, email, password },
+    data,
   });
 
   return createdUser;
@@ -24,6 +31,16 @@ async function read(where) {
   return users;
 }
 
+async function readByEmail(email) {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  return user;
+}
+
 async function readById(id) {
   const user = await prisma.user.findUnique({
     where: {
@@ -35,11 +52,17 @@ async function readById(id) {
 }
 
 async function update({ id, name, email, password }) {
+  const data = { name, email };
+
+  if (password) {
+    data.password = await bcrypt.hash(password, saltRounds);
+  }
+
   const updatedUser = await prisma.user.update({
     where: {
       id,
     },
-    data: { name, email, password },
+    data,
   });
 
   return updatedUser;
@@ -53,4 +76,4 @@ async function remove(id) {
   });
 }
 
-export default { create, read, readById, update, remove };
+export default { create, read, readByEmail, readById, update, remove };

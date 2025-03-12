@@ -1,11 +1,37 @@
-### GET all traffic
-GET http://localhost:3000/api/traffic
+@server=http://localhost:3000
+@token = {{signin.response.body.token}}
+
+### Criação de usuário
+POST {{server}}/api/createUser
 Content-Type: application/json
 
+{
+  "name": "pd0t",
+  "email": "pd0t@gmail.com",
+  "password": "123456"
+}
 ###
 
-### POST /api/traffic
-POST http://localhost:3000/api/traffic
+### Login e captura do token
+# @name signin
+POST {{server}}/api/signin
+Content-Type: application/json
+
+{
+  "email": "pd0t@gmail.com",
+  "password": "123456"
+}
+###
+
+### GET all traffic usando o token capturado
+GET {{server}}/api/traffic
+Authorization: Bearer {{token}}
+Content-Type: application/json
+###
+
+### POST /api/traffic usando o token capturado
+POST {{server}}/api/traffic
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -14,21 +40,10 @@ Content-Type: application/json
   "protocol": "HTTP",
   "user_id": 1
 }
-
 ###
 
-### GET all users
-GET http://localhost:3000/api/users
+### GET all users usando o token capturado
+GET {{server}}/api/users/6
+Authorization: Bearer {{token}}
 Content-Type: application/json
-
 ###
-
-### POST /api/users
-POST http://localhost:3000/api/users
-Content-Type: application/json
-
-{
-  "name": "Rodrigo",
-  "email": "rodrigo@gmail.com",
-  "password": "123456"
-}

@@ -1,6 +1,10 @@
 import express from 'express';
 import Traffic from './models/traffic.js';
 import User from './models/user.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+
+import { isAuthenticated } from './middleware/auth.js';
 
 class HttpError extends Error {
   constructor(message, code = 400) {
@@ -12,7 +16,7 @@ class HttpError extends Error {
 const router = express.Router();
 
 // Traffic routes
-router.post('/traffic', async (req, res) => {
+router.post('/traffic', isAuthenticated, async (req, res) => {
   const { source_ip, destination_ip, protocol, user_id } = req.body;
 
   if (!source_ip || !destination_ip || !protocol || !user_id) {
@@ -28,7 +32,7 @@ router.post('/traffic', async (req, res) => {
   }
 });
 
-router.get('/traffic', async (req, res) => {
+router.get('/traffic', isAuthenticated, async (req, res) => {
   const { source_ip } = req.query;
 
   try {
@@ -46,7 +50,7 @@ router.get('/traffic', async (req, res) => {
   }
 });
 
-router.get('/traffic/:id', async (req, res) => {
+router.get('/traffic/:id', isAuthenticated, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -62,7 +66,7 @@ router.get('/traffic/:id', async (req, res) => {
   }
 });
 
-router.put('/traffic/:id', async (req, res) => {
+router.put('/traffic/:id', isAuthenticated, async (req, res) => {
   const { source_ip, destination_ip, protocol, user_id } = req.body;
 
   const id = req.params.id;
@@ -80,7 +84,7 @@ router.put('/traffic/:id', async (req, res) => {
   }
 });
 
-router.delete('/traffic/:id', async (req, res) => {
+router.delete('/traffic/:id', isAuthenticated, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -93,7 +97,8 @@ router.delete('/traffic/:id', async (req, res) => {
 });
 
 // User routes
-router.post('/users', async (req, res) => {
+
+router.post('/createUser', async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -101,75 +106,43 @@ router.post('/users', async (req, res) => {
   }
 
   try {
+    const existingUser = await User.readByEmail(email);
+    if (existingUser) {
+      throw new HttpError('Email already in use');
+    }
+
     const createdUser = await User.create({ name, email, password });
 
+    delete createdUser.password;
+
     return res.status(201).json(createdUser);
+
   } catch (error) {
-    throw new HttpError('Unable to create user');
+    res.status(400).json({ error: error.message });
   }
 });
 
-router.get('/users', async (req, res) => {
-  const { name } = req.query;
-
+router.post('/signin', async (req, res) => {
   try {
-    if (name) {
-      const filteredUsers = await User.read({ name });
+    const { email, password } = req.body;
 
-      return res.json(filteredUsers);
-    }
+    const { id: userId, password: hash } = await User.read({ email });
 
-    const users = await User.read();
+    const match = await bcrypt.compare(password, hash);
 
-    return res.json(users);
-  } catch (error) {
-    throw new HttpError('Unable to read users');
-  }
-});
+    if (match) {
+      const token = jwt.sign(
+        { userId },
+        process.env.JWT_SECRET,
+        { expiresIn: 3600 } // 1h
+      );
 
-router.get('/users/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const user = await User.readById(id);
-
-    if (user) {
-      return res.json(user);
+      return res.json({ auth: true, token });
     } else {
-      throw new HttpError('User not found');
+      throw new Error('User not found');
     }
   } catch (error) {
-    throw new HttpError('Unable to read user');
-  }
-});
-
-router.put('/users/:id', async (req, res) => {
-  const { name, email, password } = req.body;
-
-  const id = req.params.id;
-
-  if (!name || !email || !password) {
-    throw new HttpError('Error when passing parameters');
-  }
-
-  try {
-    const updatedUser = await User.update({ id, name, email, password });
-
-    return res.json(updatedUser);
-  } catch (error) {
-    throw new HttpError('Unable to update user');
-  }
-});
-
-router.delete('/users/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await User.remove(id);
-
-    return res.sendStatus(204);
-  } catch (error) {
-    throw new HttpError('Unable to delete user');
+    res.status(401).json({ error: 'User not found' });
   }
 });
 
