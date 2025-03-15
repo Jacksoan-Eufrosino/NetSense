@@ -1,49 +1,63 @@
 @server=http://localhost:3000
 @token = {{signin.response.body.token}}
 
-### Criação de usuário
+### Criação de usuário (mantido)
 POST {{server}}/api/createUser
 Content-Type: application/json
 
 {
   "name": "pd0t",
-  "email": "pd0t@gmail.com",
+  "email": "pd0t3@gmail.com",
   "password": "123456"
 }
+
 ###
 
-### Login e captura do token
+### Login e captura do token (mantido)
 # @name signin
 POST {{server}}/api/signin
 Content-Type: application/json
 
 {
-  "email": "pd0t@gmail.com",
+  "email": "pd0t3@gmail.com",
   "password": "123456"
 }
+
 ###
 
-### GET all traffic usando o token capturado
-GET {{server}}/api/traffic
-Authorization: Bearer {{token}}
-Content-Type: application/json
-###
-
-### POST /api/traffic usando o token capturado
-POST {{server}}/api/traffic
+### Enviar nova requisição HTTP (novo)
+POST {{server}}/api/requests
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "source_ip": "192.168.1.5",
-  "destination_ip": "192.168.1.6",
-  "protocol": "HTTP",
-  "user_id": 1
+  "method": "GET",
+  "url": "https://jsonplaceholder.typicode.com/todos/1",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {}
 }
+
 ###
 
-### GET all users usando o token capturado
-GET {{server}}/api/users/6
+### Obter histórico de requisições (novo)
+GET {{server}}/api/requests
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+###
+
+### Limpar histórico (novo)
+DELETE {{server}}/api/requests
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+
+### Obter usuário por ID (mantido)
+GET {{server}}/api/users/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
 ###

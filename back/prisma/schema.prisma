@@ -8,19 +8,22 @@ generator client {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email    String   @unique
-  password String
-  traffic  Traffic[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  requests  Request[]
+  createdAt DateTime  @default(now())
 }
 
-model Traffic {
-  id             Int      @id @default(autoincrement())
-  source_ip      String
-  destination_ip String
-  protocol       String
-  timestamp      DateTime @default(now())
-  user_id        Int
-  user           User     @relation(fields: [user_id], references: [id])
+model Request {
+  id          Int      @id @default(autoincrement())
+  method      String   // GET, POST, PUT, DELETE
+  url         String
+  statusCode  Int
+  response    String   // Resposta completa em JSON
+  duration    Int      // Tempo em ms
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
 }

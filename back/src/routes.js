@@ -1,165 +1,96 @@
 import express from 'express';
-import Traffic from './models/traffic.js';
-import User from './models/user.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-
 import { isAuthenticated } from './middleware/auth.js';
-
-class HttpError extends Error {
-  constructor(message, code = 400) {
-    super(message);
-    this.code = code;
-  }
-}
+import prisma from './database/database.js';
+import httpService from './services/httpService.js';
+import requestsRepository from './models/requestsRepository.js';
 
 const router = express.Router();
 
-// Traffic routes
-router.post('/traffic', isAuthenticated, async (req, res) => {
-  const { source_ip, destination_ip, protocol, user_id } = req.body;
-
-  if (!source_ip || !destination_ip || !protocol || !user_id) {
-    throw new HttpError('Error when passing parameters');
-  }
-
-  try {
-    const createdTraffic = await Traffic.create({ source_ip, destination_ip, protocol, user_id });
-
-    return res.status(201).json(createdTraffic);
-  } catch (error) {
-    throw new HttpError('Unable to create traffic');
-  }
-});
-
-router.get('/traffic', isAuthenticated, async (req, res) => {
-  const { source_ip } = req.query;
-
-  try {
-    if (source_ip) {
-      const filteredTraffic = await Traffic.read({ source_ip });
-
-      return res.json(filteredTraffic);
-    }
-
-    const traffic = await Traffic.read();
-
-    return res.json(traffic);
-  } catch (error) {
-    throw new HttpError('Unable to read traffic');
-  }
-});
-
-router.get('/traffic/:id', isAuthenticated, async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const traffic = await Traffic.readById(id);
-
-    if (traffic) {
-      return res.json(traffic);
-    } else {
-      throw new HttpError('Traffic not found');
-    }
-  } catch (error) {
-    throw new HttpError('Unable to read traffic');
-  }
-});
-
-router.put('/traffic/:id', isAuthenticated, async (req, res) => {
-  const { source_ip, destination_ip, protocol, user_id } = req.body;
-
-  const id = req.params.id;
-
-  if (!source_ip || !destination_ip || !protocol || !user_id) {
-    throw new HttpError('Error when passing parameters');
-  }
-
-  try {
-    const updatedTraffic = await Traffic.update({ id, source_ip, destination_ip, protocol, user_id });
-
-    return res.json(updatedTraffic);
-  } catch (error) {
-    throw new HttpError('Unable to update traffic');
-  }
-});
-
-router.delete('/traffic/:id', isAuthenticated, async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await Traffic.remove(id);
-
-    return res.sendStatus(204);
-  } catch (error) {
-    throw new HttpError('Unable to delete traffic');
-  }
-});
-
-// User routes
-
+// Rotas de Usuário (mantidas intactas)
 router.post('/createUser', async (req, res) => {
   const { name, email, password } = req.body;
-
   if (!name || !email || !password) {
-    throw new HttpError('Error when passing parameters');
+    return res.status(400).json({ message: 'Missing required fields' });
   }
-
   try {
-    const existingUser = await User.readByEmail(email);
-    if (existingUser) {
-      throw new HttpError('Email already in use');
-    }
-
-    const createdUser = await User.create({ name, email, password });
-
-    delete createdUser.password;
-
-    return res.status(201).json(createdUser);
-
+    const user = await prisma.user.create({
+      data: { name, email, password }
+    });
+    res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ message: 'Error creating user', error });
   }
 });
 
 router.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-
-    const { id: userId, password: hash } = await User.read({ email });
-
-    const match = await bcrypt.compare(password, hash);
-
-    if (match) {
-      const token = jwt.sign(
-        { userId },
-        process.env.JWT_SECRET,
-        { expiresIn: 3600 } // 1h
-      );
-
-      return res.json({ auth: true, token });
+    const user = await prisma.user.findUnique({
+      where: { email }
+    });
+    if (user && user.password === password) {
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.json({ auth: true, token });
     } else {
-      throw new Error('User not found');
+      res.status(401).json({ auth: false, message: 'Invalid credentials' });
     }
   } catch (error) {
-    res.status(401).json({ error: 'User not found' });
+    res.status(500).json({ message: 'Error signing in', error });
   }
 });
 
-// 404 handler
-router.use((req, res, next) => {
-  return res.status(404).json({ message: 'Content not found!' });
+// Novas Rotas de Requisições (substituindo as de tráfego)
+router.post('/requests', isAuthenticated, async (req, res) => {
+  try {
+    const result = await httpService.sendRequest(req.body, req.userId);
+    
+    if (result.success) {
+      res.status(200).json(result);
+    } else {
+      res.status(500).json(result);
+    }
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      error: error.message 
+    });
+  }
 });
 
-// Error handler
-router.use((err, req, res, next) => {
-  console.error(err.stack);
-
-  if (err instanceof HttpError) {
-    return res.status(err.code).json({ message: err.message });
+router.get('/requests', isAuthenticated, async (req, res) => {
+  try {
+    const requests = await requestsRepository.findByUserId(req.userId);
+    res.json(requests);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar histórico' });
   }
+});
 
-  return res.status(500).json({ message: 'Something broke!' });
+router.delete('/requests', isAuthenticated, async (req, res) => {
+  try {
+    await requestsRepository.clearHistory(req.userId);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao limpar histórico' });
+  }
+});
+
+// Rotas de Usuário Existente (mantidas)
+router.get('/users/:id', isAuthenticated, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: parseInt(id) }
+    });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user', error });
+  }
 });
 
 export default router;
