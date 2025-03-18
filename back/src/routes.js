@@ -7,7 +7,7 @@ import requestsRepository from './models/requestsRepository.js';
 
 const router = express.Router();
 
-// Rotas de Usuário (mantidas intactas)
+// Rotas de Usuário
 router.post('/createUser', async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -40,7 +40,7 @@ router.post('/signin', async (req, res) => {
   }
 });
 
-// Novas Rotas de Requisições (substituindo as de tráfego)
+// Rotas de Requisições
 router.post('/requests', isAuthenticated, async (req, res) => {
   try {
     const result = await httpService.sendRequest(req.body, req.userId);
@@ -73,23 +73,6 @@ router.delete('/requests', isAuthenticated, async (req, res) => {
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao limpar histórico' });
-  }
-});
-
-// Rotas de Usuário Existente (mantidas)
-router.get('/users/:id', isAuthenticated, async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await prisma.user.findUnique({
-      where: { id: parseInt(id) }
-    });
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching user', error });
   }
 });
 

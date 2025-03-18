@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "name": "pd0t",
-  "email": "pd0t3@gmail.com",
+  "email": "pd0t5@gmail.com",
   "password": "123456"
 }
 
@@ -50,13 +50,6 @@ Content-Type: application/json
 
 ### Limpar histórico (novo)
 DELETE {{server}}/api/requests
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-###
-
-### Obter usuário por ID (mantido)
-GET {{server}}/api/users/1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

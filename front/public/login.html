@@ -56,6 +56,7 @@
                     </label>
                     <input
                       type="email"
+                      name="email"
                       class="form-control"
                       id="signinEmailInput"
                       required=""
@@ -65,14 +66,15 @@
                     </div>
                   </div>
                   <div class="mb-3">
-                    <label for="formSignUpPassword" class="form-label"
-                      >Senha</label
-                    >
+                    <label for="signinPasswordInput" class="form-label">
+                      Senha
+                    </label>
                     <div class="password-field position-relative">
                       <input
                         type="password"
-                        class="form-control fakePassword"
-                        id="formSignUpPassword"
+                        name="password"
+                        class="form-control"
+                        id="signinPasswordInput"
                         required=""
                       />
                       <div class="invalid-feedback">
@@ -149,9 +151,7 @@
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-
-    </script>
+    <script type="module" src="./js/signin.js"></script>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
