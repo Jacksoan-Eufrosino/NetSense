@@ -1,4 +1,3 @@
-// src/models/requestsRepository.js
 import prisma from '../database/database.js';
 
 export default {
@@ -8,7 +7,8 @@ export default {
         method: requestData.method,
         url: requestData.url,
         statusCode: requestData.statusCode,
-        response: JSON.stringify(requestData.response),
+        response: requestData.response,                   // string (JSON do body)
+        responseHeaders: requestData.responseHeaders,     // objeto JSON
         duration: requestData.duration,
         userId: requestData.userId
       }
@@ -23,7 +23,9 @@ export default {
 
     return requests.map(request => ({
       ...request,
-      response: JSON.parse(request.response)
+      // Se 'response' for string, parse se precisar
+      response: request.response ? JSON.parse(request.response) : null
+      // Se 'responseHeaders' for Json, já vem como objeto nativamente pelo Prisma 4+.
     }));
   },
 

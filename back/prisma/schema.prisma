@@ -17,13 +17,14 @@ model User {
 }
 
 model Request {
-  id          Int      @id @default(autoincrement())
-  method      String   // GET, POST, PUT, DELETE
-  url         String
-  statusCode  Int
-  response    String   // Resposta completa em JSON
-  duration    Int      // Tempo em ms
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  method        String
+  url           String
+  statusCode    Int
+  response      String   
+  responseHeaders Json? 
+  duration      Int
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
 }

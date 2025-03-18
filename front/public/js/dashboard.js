@@ -84,19 +84,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function escapeHtml(unsafe) {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }  
+
   function renderHistory(history) {
     const container = document.getElementById('requests');
     container.innerHTML = history.map(req => `
       <div class="card mb-2" data-id="${req.id}">
         <div class="card-header d-flex justify-content-between">
-          <span class="badge bg-${getMethodBadgeColor(req.method)}">${req.method}</span>
+          <span>${req.method}</span>
           <span>${req.url}</span>
           <span>Status: ${req.statusCode}</span>
           <span>Tempo: ${req.duration}ms</span>
         </div>
         <div class="card-body">
           <p><strong>Response Body:</strong></p>
-          <pre>${typeof req.response === 'object' ? JSON.stringify(req.response, null, 2) : req.response}</pre>
+          <pre>${escapeHtml(typeof req.response === 'string' ? req.response : JSON.stringify(req.response, null, 2))}</pre>
           <p><strong>Response Headers:</strong></p>
           <pre>${JSON.stringify(req.responseHeaders || {}, null, 2)}</pre>
           <p><strong>Request Headers:</strong></p>
@@ -105,6 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `).join('');
   }
+  
+
 
   function getMethodBadgeColor(method) {
     switch (method.toUpperCase()) {
