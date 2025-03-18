@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   
+ 
   async function updateHistory() {
     try {
       const token = Auth.getToken();
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Erro ao atualizar histórico');
     }
   }
+  
 
   function escapeHtml(unsafe) {
     return unsafe
@@ -98,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = history.map(req => `
       <div class="card mb-2" data-id="${req.id}">
         <div class="card-header d-flex justify-content-between">
-          <span>${req.method}</span>
+          <span class="badge bg-${getMethodBadgeColor(req.method)}">${req.method}</span>
           <span>${req.url}</span>
           <span>Status: ${req.statusCode}</span>
           <span>Tempo: ${req.duration}ms</span>
@@ -114,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `).join('');
   }
-  
 
 
   function getMethodBadgeColor(method) {

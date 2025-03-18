@@ -38,6 +38,16 @@
         padding: 10px;
         background-color: #f9f9f9;
       }
+
+      
+      .card-body pre {
+        white-space: pre-wrap; /* Wrap the text */
+        word-wrap: break-word; /* Break long words */
+      }
+
+      .card-body {
+        overflow-x: auto; /* Add horizontal scroll if needed */
+      }
     </style>
   </head>
   <body>
@@ -101,7 +111,7 @@
           <div class="input-group mb-3">
             <select id="method" class="form-select">
               <option value="GET">GET</option>
-              <option value="POST">POST</option>
+              <!-- <option value="POST">POST</option> -->
               <option value="PUT">PUT</option>
               <option value="DELETE">DELETE</option>
             </select>
