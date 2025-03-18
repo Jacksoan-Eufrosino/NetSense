@@ -116,7 +116,7 @@
             <textarea id="body" class="form-control" placeholder='{"key": "value"}'></textarea>
           </div>
           <button class="btn btn-primary" id="sendRequest">Enviar</button>
-          <button class="btn btn-secondary" id="updateHistory">Atualizar</button>
+          <!-- <button class="btn btn-secondary" id="updateHistory">Atualizar</button> -->
           <button class="btn btn-danger" id="clearHistory">Limpar</button>
         </div>
       </div>
@@ -163,6 +163,9 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="./js/dashboard.js"></script>
+    
     <script type="module">
       import Auth from './js/services/auth.js';
 

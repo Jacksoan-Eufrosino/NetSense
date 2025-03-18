@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "parcel-bundler": "^1.12.5",
     "vite": "^6.1.0"
   },
   "dependencies": {
