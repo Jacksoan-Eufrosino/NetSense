@@ -58,7 +58,7 @@ npm install
 1. Configure o Prisma:
 
 ```bash
-npx prisma migrate dev --name init
+cd back/prisma/ ; npx prisma migrate dev --name init ; cd ../../
 ```
 
 ## Executando a aplicação
@@ -77,11 +77,11 @@ http://localhost:3000
 
 ## Alunos responsáveis
 
-Jacksoan Eufrosino
-José Ryann
-José Rodrigo S. Padilha
+- Jacksoan Eufrosino
+- José Ryann
+- José Rodrigo S. Padilha
 
 ## Disciplina 
 
-Professor: Luiz Carlos Rodrigues Chaves
-Desenvolvimento Web - IFPB CSTRC
+- Professor: Luiz Carlos Rodrigues Chaves
+- Desenvolvimento Web - IFPB CSTRC
