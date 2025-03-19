@@ -30,9 +30,36 @@
         max-height: 400px;
         overflow-y: auto;
       }
+
+      #requests {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #f9f9f9;
+      }
+
+      
+      .card-body pre {
+        white-space: pre-wrap; /* Wrap the text */
+        word-wrap: break-word; /* Break long words */
+      }
+
+      .card-body {
+        overflow-x: auto; /* Add horizontal scroll if needed */
+      }
     </style>
   </head>
   <body>
+    <script type="module">
+      import Auth from './js/services/auth.js';
+      document.addEventListener('DOMContentLoaded', () => {
+        if (!Auth.isAuthenticated()) {
+          window.location.href = '/error.html';
+        }
+      });
+    </script>
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">
@@ -65,7 +92,7 @@
           </ul>
 
           <div class="text-start">
-            <button type="button" class="btn btn-primary me-2" id="buttonLeft">
+            <button type="button" class="btn btn-primary me-2" id="logoutButton">
               Sair
             </button>
           </div>
@@ -77,25 +104,37 @@
       <h3>Dashboard principal</h3>
       <br>
       <br>
+     
       <div class="row mb-4">
-        <div class="col-md-4">
-          <h4>Adicionar Regex</h4>
+        <div class="col-md-12">
+          <h4>Enviar Requisição HTTP</h4>
           <div class="input-group mb-3">
-            <input
-              type="text"
-              id="regexInput"
-              class="form-control"
-              placeholder="Digite a palavra ou regex"
-              aria-label="Regex Input"
-              aria-describedby="addRegex"
-            />
-            <button class="btn btn-primary" id="addRegex">Adicionar</button>
+            <select id="method" class="form-select">
+              <option value="GET">GET</option>
+              <!-- <option value="POST">POST</option> -->
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <input type="text" id="url" class="form-control" placeholder="URL" required>
           </div>
-          <ul id="regexList" class="list-group"></ul>
+          <div class="mb-3">
+            <h5>Headers</h5>
+            <textarea id="headers" class="form-control" placeholder='{"Content-Type": "application/json"}'></textarea>
+          </div>
+          <div class="mb-3">
+            <h5>Body</h5>
+            <textarea id="body" class="form-control" placeholder='{"key": "value"}'></textarea>
+          </div>
+          <button class="btn btn-primary" id="sendRequest">Enviar</button>
+          <!-- <button class="btn btn-secondary" id="updateHistory">Atualizar</button> -->
+          <button class="btn btn-danger" id="clearHistory">Limpar</button>
         </div>
-        <div class="col-md-8">
-          <h4>Pacotes</h4>
-          <div id="packetView" class="packet-container border p-3 bg-white"></div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <h4>Histórico de Requisições</h4>
+          <div id="requests"></div>
         </div>
       </div>
 
@@ -106,7 +145,7 @@
           <p class="col-md-4 mb-0 text-body-secondary">© 2025 NetSense, Inc</p>
           <a
             href="/"
-            class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+            class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-auto link-body-emphasis text-decoration-none"
           >
             <img src="images/radar.svg" alt="radar" style="height: 40px" />
           </a>
@@ -134,17 +173,15 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="./js/dashboard.js"></script>
+    
     <script type="module">
-      import { checkSession, initializeRegexHandlers, initializeLogout } from './js/sessionDashboard.js';
-      
-      // Verificar sessão
-      checkSession();
+      import Auth from './js/services/auth.js';
 
-      // Inicializar manipuladores de regex
-      initializeRegexHandlers();
-
-      // Inicializar botão de logout
-      initializeLogout();
+      document.getElementById('logoutButton').addEventListener('click', () => {
+        Auth.signout();
+      });
     </script>
 
     <script

@@ -1,0 +1,56 @@
+@server=http://localhost:3000
+@token = {{signin.response.body.token}}
+
+### Criação de usuário (mantido)
+POST {{server}}/api/createUser
+Content-Type: application/json
+
+{
+  "name": "pd0t",
+  "email": "pd0t5@gmail.com",
+  "password": "123456"
+}
+
+###
+
+### Login e captura do token (mantido)
+# @name signin
+POST {{server}}/api/signin
+Content-Type: application/json
+
+{
+  "email": "pd0t3@gmail.com",
+  "password": "123456"
+}
+
+###
+
+### Enviar nova requisição HTTP (novo)
+POST {{server}}/api/requests
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "method": "GET",
+  "url": "https://jsonplaceholder.typicode.com/todos/1",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {}
+}
+
+###
+
+### Obter histórico de requisições (novo)
+GET {{server}}/api/requests
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+
+### Limpar histórico (novo)
+DELETE {{server}}/api/requests
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###

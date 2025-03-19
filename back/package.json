@@ -2,8 +2,8 @@
   "name": "netsense-app",
   "types": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
     "db:reset": "prisma migrate reset --force",
     "test": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src",
     "test:coverage": "npm run db:reset && node --experimental-vm-modules ./node_modules/.bin/jest src --coverage"
@@ -24,7 +24,6 @@
     "axios": "^1.8.3",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
-    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",

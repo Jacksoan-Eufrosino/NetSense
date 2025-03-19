@@ -1,0 +1,31 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  requests  Request[]
+  createdAt DateTime  @default(now())
+}
+
+model Request {
+  id              Int      @id @default(autoincrement())
+  method          String   // GET, POST, PUT, DELETE
+  url             String
+  statusCode      Int
+  response        String   
+  responseHeaders Json?    
+  requestHeaders  Json?    
+  duration        Int      
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
+}

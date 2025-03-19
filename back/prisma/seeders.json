@@ -1,0 +1,28 @@
+{
+    "users": [
+        {
+            "name": "admin",
+            "email": "admin123@admin.com",
+            "password": "admin123"
+        },
+        {
+            "name": "usuario",
+            "email": "usuario123@usuario.com",
+            "password": "usuario123"
+        }
+    ],
+    "traffic": [
+        {
+            "source_ip": "192.168.1.2",
+            "destination_ip": "192.168.1.4",
+            "protocol": "HTTP",
+            "user_id": 1
+        },
+        {
+            "source_ip": "192.168.1.5",
+            "destination_ip": "192.168.1.7",
+            "protocol": "HTTPS",
+            "user_id": 2
+        }
+    ]
+}
